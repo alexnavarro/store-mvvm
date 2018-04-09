@@ -3,4 +3,8 @@
     <string name="editors_choice">Editors choice</string>
     <string name="more">MORE</string>
     <string name="local_top_apps">Local top Apps</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="apps">Apps</string>
+    <string name="stores">Stores</string>
 </resources>

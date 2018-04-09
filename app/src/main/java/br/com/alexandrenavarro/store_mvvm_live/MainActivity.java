@@ -1,5 +1,7 @@
 package br.com.alexandrenavarro.store_mvvm_live;
 
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +11,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import br.com.alexandrenavarro.store_mvvm_live.adapter.StoreAdapter;
+import br.com.alexandrenavarro.store_mvvm_live.util.EspressoIdlingResource;
 import br.com.alexandrenavarro.store_mvvm_live.view_model.StoreViewModel;
 
 public class MainActivity extends AppCompatActivity implements Observer {
@@ -44,5 +47,10 @@ public class MainActivity extends AppCompatActivity implements Observer {
     @Override protected void onDestroy() {
         super.onDestroy();
         storeViewModel.reset();
+    }
+
+    @VisibleForTesting
+    public IdlingResource getCountingIdlingResource() {
+        return EspressoIdlingResource.getIdlingResource();
     }
 }

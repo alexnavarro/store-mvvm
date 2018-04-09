@@ -54,11 +54,7 @@ public class ItemEditorViewModel extends BaseObservable{
 
     @BindingAdapter("imageIconUrl")
     public static void setIconImageUrl(ImageView imageView, String url){
-//        float density = imageView.getContext().getResources().getDisplayMetrics().density;
-//        int height = (int) (200.0 * density);
-//        int widthPixels = imageView.getContext().getResources().getDisplayMetrics().widthPixels;
         Picasso.with(imageView.getContext()).load(url)
-//                .resize(widthPixels/2, height)
                 .centerCrop()
                 .fit()
                 .into(imageView);

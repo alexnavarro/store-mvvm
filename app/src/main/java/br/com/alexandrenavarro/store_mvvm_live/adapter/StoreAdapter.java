@@ -54,7 +54,7 @@ public class StoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof SimpleViewHolder){
+        if(position == 0){
             String title = mContext.getString(R.string.editors_choice);
             ((SimpleViewHolder) holder).title.setText(title);
             HorizontalAdapter horizontalAdapter = ((SimpleViewHolder) holder).horizontalAdapter;

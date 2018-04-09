@@ -9,8 +9,10 @@ import java.util.Observable;
 import br.com.alexandrenavarro.store_mvvm_live.data.App;
 import br.com.alexandrenavarro.store_mvvm_live.data.source.StoreRepository;
 import br.com.alexandrenavarro.store_mvvm_live.util.BaseSchedulerProvider;
+import br.com.alexandrenavarro.store_mvvm_live.util.EspressoIdlingResource;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
 public class StoreViewModel extends Observable {
@@ -30,9 +32,19 @@ public class StoreViewModel extends Observable {
     }
 
     private void loadApps(){
+        EspressoIdlingResource.increment();
+        compositeDisposable.clear();
         Disposable disposable =  repository.loadApplications()
                 .subscribeOn(mSchedulerProvider.computation())
                 .observeOn(mSchedulerProvider.ui())
+                .doFinally(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        if (!EspressoIdlingResource.getIdlingResource().isIdleNow()) {
+                            EspressoIdlingResource.decrement(); // Set app as idle.
+                        }
+                    }
+                })
                 .subscribe(new Consumer<List<App>>() {
                     @Override
                     public void accept(List<App> apps) throws Exception {
@@ -44,6 +56,7 @@ public class StoreViewModel extends Observable {
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
+
                         Log.d("Error", throwable.getMessage());
                     }
                 });
@@ -60,7 +73,6 @@ public class StoreViewModel extends Observable {
     public void reset() {
         unSubscribeFromObservable();
         compositeDisposable = null;
-//        context = null;
     }
 
     public List<App> getAppList() {
