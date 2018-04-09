@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">store-mvvm-live</string>
+    <string name="editors_choice">Editors choice</string>
+    <string name="more">MORE</string>
+    <string name="local_top_apps">Local top Apps</string>
+</resources>
